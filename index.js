@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const routers = require('./router');
 const { initUsers } = require('./src/controller');
 const { initVoters } = require('./src/controller/AuthController');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+
 require('dotenv').config();
 
 //connection database
@@ -47,7 +49,8 @@ app.use(express.json({ limit: '10kb' }));
 
 //Sets handlebars configurations (we will go through them later on)
 const hbs = handlebars.express4({
-    extname: '.hbs'
+    extname: '.hbs',
+    handlebars: allowInsecurePrototypeAccess(handlebars)
 });
 handlebars.registerHelper('compare_dates', function (arg1, options) {
     return new Date() > new Date(arg1);
@@ -56,6 +59,9 @@ handlebars.registerHelper('formateDate', function (date, options) {
     var local = new Date(date);
     local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
+});
+handlebars.registerHelper('slice', function (str, options) {
+    return str.slice(0, 100) + ' .....';
 });
 app.engine('hbs', hbs);
 app.set('view engine', 'hbs');
@@ -67,7 +73,7 @@ app.use(express.static('public'));
 app.use(routers);
 
 // seed data into db
-// initUsers();
+initUsers();
 // initVoters();
 
 //server

@@ -5,7 +5,8 @@ exports.initUsers = async () => {
         {
             name: 'admin',
             email: 'admin@e-vote.com',
-            password: '123456789'
+            password: '123456789',
+            is_admin: true
         },
         {
             name: 'comptage',
@@ -15,7 +16,8 @@ exports.initUsers = async () => {
         {
             name: 'depouillement',
             email: 'depouillement@e-vote.com',
-            password: '123456789'
+            password: '123456789',
+            dep: true
         }
     ];
     try {

@@ -90,26 +90,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
-                        <th
-                            scope='row'
-                            class='px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap'
-                        >
-                            billal
-                        </th>
-                        <td class='px-6 py-4'>
-                            elmaalmi
-                        </td>
-                        <td class='px-6 py-4'>
-                            elmaalmibillal@gmail.com
-                        </td>
-                        <td class='px-6 py-4'>
-                            20-20-2000
-                        </td>
-                        <td class='px-6 py-4'>
-                            el maalmi
-                        </td>
-                    </tr>
+                    {{#each voters}}
+                        <tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+                            <th
+                                scope='row'
+                                class='px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap'
+                            >
+                                {{this.f_name}}
+                            </th>
+                            <td class='px-6 py-4'>
+                                {{this.l_name}}
+
+                            </td>
+                            <td class='px-6 py-4'>
+                                {{this.email}}
+                            </td>
+                            <td class='px-6 py-4'>
+                                {{formateDate this.birthday}}
+                            </td>
+                            <td class='px-6 py-4'>
+                                {{slice this.condidate}}
+                            </td>
+                        </tr>
+                    {{/each}}
                 </tbody>
             </table>
         </div>

@@ -7,8 +7,9 @@ const {
     NewCondidate,
     SaveCondidate
 } = require('./src/controller/CondidateController');
-const { VoteHomePage, NewVote, SaveVote } = require('./src/controller/VoteController');
+const { VoteHomePage, NewVote, SaveVote, dashBoard } = require('./src/controller/VoteController');
 const { SaveVoterVote } = require('./src/controller/VotersController');
+const { adminMiddleware } = require('./src/middleware/adminMidd');
 const { authMiddleware } = require('./src/middleware/auth');
 
 // app routes
@@ -17,20 +18,26 @@ router.get('/403', (req, res) => res.render('403'));
 router.get('/done', (req, res) => res.render('donepage'));
 //admin & CO & CA routes
 
-router.get('/dash', (req, res) => res.render('dash', { title: 'My Shop' }));
+router.get('/dash', [authMiddleware], (req, res) => dashBoard(req, res));
 
 //votes routers
-router.get('/votes', (req, res) => VoteHomePage(req, res));
-router.get('/votes/new', (req, res) => NewVote(req, res));
-router.post('/votes/save', (req, res) => SaveVote(req, res));
+router.get('/votes', [authMiddleware, adminMiddleware], (req, res) => VoteHomePage(req, res));
+router.get('/votes/new', [authMiddleware, adminMiddleware], (req, res) => NewVote(req, res));
+router.post('/votes/save', [authMiddleware, adminMiddleware], (req, res) => SaveVote(req, res));
 
 router.get('/vote/:voteId/:token', VotePage);
 router.post('/voter/save', SaveVoterVote);
 
 //condidate
-router.get('/condidates', (req, res) => CondidateHomePage(req, res));
-router.get('/condidates/new', (req, res) => NewCondidate(req, res));
-router.post('/condidates/save', (req, res) => SaveCondidate(req, res));
+router.get('/condidates', [authMiddleware, adminMiddleware], (req, res) =>
+    CondidateHomePage(req, res)
+);
+router.get('/condidates/new', [authMiddleware, adminMiddleware], (req, res) =>
+    NewCondidate(req, res)
+);
+router.post('/condidates/save', [authMiddleware, adminMiddleware], (req, res) =>
+    SaveCondidate(req, res)
+);
 
 //users routes
 router.get('/login', (req, res) => res.render('login'));

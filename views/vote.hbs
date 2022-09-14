@@ -22,7 +22,9 @@
                         class='w-60 h-40 fill-current text-gray-500'
                     />
                 </div>
-                <form method='POST' action='voter/save'>
+                <form method='POST' action='/voter/save'>
+                    <input name='voteId' type='hidden' value='{{voteId}}' />
+                    <input name='token' type='hidden' value='{{token}}' />
                     <div class='mt-4'>
                         <label for='prenom' class='block font-medium text-sm text-gray-700'>
                             Prenom
@@ -62,7 +64,7 @@
                             disabled
                             type='date'
                             name='birthday'
-                            value='{{voter.birthday}}'
+                            value='{{formateDate voter.birthday}}'
                             class='rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full'
                         />
                     </div>
@@ -72,7 +74,7 @@
                         </label>
                         <select
                             id='condidat_nom'
-                            name='condidat'
+                            name='condidate'
                             class='block mt-1 w-full'
                             placeholder='Choisir votre condidat...'
                             required
@@ -80,7 +82,11 @@
                             <option> </option>
                             {{#each condidates}}
 
-                                <option value='{{this._id}}'> {{this.name}} </option>
+                                <option value='{{this._id}}'>
+                                    {{this.l_name}}
+                                    -
+                                    {{this.f_name}}
+                                </option>
 
                             {{/each}}
                         </select>

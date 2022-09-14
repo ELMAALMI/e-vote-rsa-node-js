@@ -20,6 +20,14 @@ const UserSchema = new Schema({
     salt: {
         type: String,
         required: true
+    },
+    is_admin: {
+        type: Boolean,
+        default: false
+    },
+    dep: {
+        type: Boolean,
+        default: false
     }
 });
 UserSchema.virtual('password')
