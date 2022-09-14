@@ -10,6 +10,10 @@ const condidateSchema = new Schema({
     l_name: {
         type: String,
         required: true
+    },
+    birthday: {
+        type: Date,
+        required: true
     }
 });
 

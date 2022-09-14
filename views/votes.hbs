@@ -1,0 +1,158 @@
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8' />
+        <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <title> Vote </title>
+        <link rel='stylesheet' href='styles/style.css' />
+        <link
+            rel='stylesheet'
+            href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'
+        />
+    </head>
+    <body class='min-h-screen bg-gray-100'>
+        <nav class='bg-white border-b border-gray-100'>
+            <div class='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+                <div class='flex justify-between h-16'>
+                    <div class='flex'>
+                        <!-- Logo -->
+                        <div class='flex-shrink-0 flex items-center'>
+                            <a href='/dash'>
+                                <a href='/'>
+                                    <img
+                                        class='block h-10 w-auto fill-current text-gray-600'
+                                        src='/img/vote.png'
+                                    />
+                                </a>
+                            </a>
+                        </div>
+                        <div class='hidden space-x-8 sm:-my-px sm:ml-10 sm:flex'>
+                            <a
+                                href='dash'
+                                class='inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'
+                            >
+                                Dashbord
+                            </a>
+                            <a
+                                href='votes'
+                                class='inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'
+                            >
+                                List Des Vote
+                            </a>
+                            <a
+                                href='condidates'
+                                class='inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'
+                            >
+                                List Des Condidat
+                            </a>
+                        </div>
+                    </div>
+                    <!-- This example requires Tailwind CSS v2.0+ -->
+                    <div class='flex inline-flex items-center'>
+                        <a href='/logout'>
+                            <button
+                                type='button'
+                                class='inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500'
+                                id='menu-button'
+                                aria-expanded='true'
+                                aria-haspopup='true'
+                            >
+                                <i class='fa fa-sign-out'></i>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {{! end }}
+
+        <div
+            class='relative overflow-x-auto shadow-md sm:rounded-lg mt-6 items-center justify-center mx-11'
+        >
+            <div class='mt-5'>
+                <a
+                    href='votes/new'
+                    class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3'
+                >
+                    New
+                </a>
+            </div>
+            <table class='w-full text-sm mt-5 text-left text-gray-500 dark:text-gray-400'>
+                <thead
+                    class='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'
+                >
+                    <tr>
+                        <th scope='col' class='px-6 py-3'>
+                            Vote ID
+                        </th>
+                        <th scope='col' class='px-6 py-3'>
+                            Vote Name
+                        </th>
+                        <th scope='col' class='px-6 py-3'>
+                            Nb Condidates
+                        </th>
+                        <th scope='col' class='px-6 py-3'>
+                            Nb Voters
+                        </th>
+                        <th scope='col' class='px-6 py-3'>
+                            Closed
+                        </th>
+                        <th scope='col' class='px-6 py-3'>
+                            WINNERS
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each votes}}
+                        <tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+                            <th class='py-4 px-6'> {{this._id}} </th>
+                            <th class='py-4 px-6'> {{this.name}} </th>
+                            <th class='py-4 px-6'>{{this.condidates.length}}</th>
+                            <th class='py-4 px-6'>{{this.voters.length}}</th>
+                            <th class='py-4 px-6'>
+                                {{#if (compare_dates this.e_date)}}
+                                    <svg
+                                        class='w-6 h-6'
+                                        fill='none'
+                                        stroke='currentColor'
+                                        viewBox='0 0 24 24'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                    ><path
+                                            stroke-linecap='round'
+                                            stroke-linejoin='round'
+                                            stroke-width='2'
+                                            d='M5 13l4 4L19 7'
+                                        ></path></svg>
+
+                                {{else}}
+
+                                    <svg
+                                        aria-hidden='true'
+                                        role='status'
+                                        class='inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600'
+                                        viewBox='0 0 100 101'
+                                        fill='none'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                    >
+                                        <path
+                                            d='M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z'
+                                            fill='currentColor'
+                                        ></path>
+                                        <path
+                                            d='M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z'
+                                            fill='#1C64F2'
+                                        ></path>
+                                    </svg>
+
+                                {{/if}}
+                            </th>
+                            <th class='py-4 px-6'>
+                                Billal
+                            </th>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

@@ -22,7 +22,7 @@
                         class='w-60 h-40 fill-current text-gray-500'
                     />
                 </div>
-                <form method='POST' action=''>
+                <form method='POST' action='voter/save'>
                     <div class='mt-4'>
                         <label for='prenom' class='block font-medium text-sm text-gray-700'>
                             Prenom
@@ -32,6 +32,8 @@
                             id='prenom'
                             type='text'
                             name='prenom'
+                            value='{{voter.f_name}}'
+                            disabled
                             class='rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full'
                         />
                     </div>
@@ -41,9 +43,11 @@
                         </label>
                         <input
                             required
+                            disabled
                             id='nom'
                             type='text'
                             name='nom'
+                            value='{{voter.l_name}}'
                             class='rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full'
                         />
                     </div>
@@ -55,8 +59,10 @@
                         <input
                             required
                             id='birthday'
+                            disabled
                             type='date'
                             name='birthday'
+                            value='{{voter.birthday}}'
                             class='rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full'
                         />
                     </div>
