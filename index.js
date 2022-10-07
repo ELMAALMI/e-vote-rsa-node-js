@@ -4,7 +4,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const routers = require('./router');
 const { initUsers } = require('./src/controller');
-const { initVoters } = require('./src/controller/AuthController');
+const { initVoteAndVoters } = require('./src/controller/AuthController');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 require('dotenv').config();
@@ -74,7 +74,8 @@ app.use(routers);
 
 // seed data into db
 initUsers();
-// initVoters();
+initVoteAndVoters();
+//
 
 //server
 const port = process.env.PORT || 4000;

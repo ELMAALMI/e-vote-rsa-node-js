@@ -1,4 +1,5 @@
-const { User, Voter } = require('../model');
+const { User, Voter, Condidate, Vote } = require('../model');
+const fs = require('fs');
 
 exports.initUsers = async () => {
     const users = [
@@ -40,55 +41,103 @@ const makeId = (length) => {
     return result;
 };
 
-exports.initVoters = async () => {
-    const voters = [];
-    for (let i = 0; i < 20; i++) {
-        voters.push({
-            l_name: 'EL MAALMI_' + i,
-            f_name: 'BILLAL_' + i,
-            email: 'elmaalmibillal@gmail.com',
-            birthday: '2000-01-23',
-            token: {
-                value: makeId(20),
-                valid: true
-            }
-        });
-        voters.push({
-            l_name: 'BOUSLAMA' + i,
-            f_name: 'HIND_' + i,
-            email: 'hind.bouslama@gmail.com',
-            birthday: '1998-11-23',
-            token: {
-                value: makeId(20),
-                valid: true
-            }
-        });
-        voters.push({
-            l_name: 'BAALOU_' + i,
-            f_name: 'REDA_' + i,
-            email: 'reda.baalou@gmail.com',
-            birthday: '1999-01-23',
-            token: {
-                value: makeId(20),
-                valid: true
-            }
-        });
-        voters.push({
-            l_name: 'BENJOUD' + i,
-            f_name: 'JAD_' + i,
-            email: 'benjad.jad@gmail.com',
-            birthday: '1992-11-10',
-            token: {
-                value: makeId(20),
-                valid: true
-            }
-        });
-    }
+exports.initVoteAndVoters = async () => {
     try {
+        let c_tab = [
+            {
+                f_name: 'EL MAALMI',
+                l_name: 'BILLAL',
+                birthday: '2000-01-23'
+            },
+            {
+                f_name: 'HIND',
+                l_name: 'BOUSLAMA',
+                birthday: '1998-01-01'
+            },
+            {
+                f_name: 'BAALO',
+                l_name: 'REDA',
+                birthday: '1998-01-01'
+            },
+            {
+                f_name: 'JAD',
+                l_name: 'BEN JOUD',
+                birthday: '1998-01-01'
+            }
+        ];
+        await Condidate.collection.drop();
+        await Vote.collection.drop();
+
+        c_tab = await Condidate.insertMany(c_tab);
+        let vote = {
+            name: 'SO-VOTE',
+            s_date: '2022-09-15',
+            e_date: '2022-11-30',
+            condidates: c_tab
+        };
+        vote = await Vote.create(vote);
+        // voters -------------------
+        const voters = [];
+        for (let i = 0; i < 20; i++) {
+            voters.push({
+                l_name: 'EL MAALMI_' + i,
+                f_name: 'BILLAL_' + i,
+                email: 'elmaalmibillal@gmail.com',
+                birthday: '2000-01-23',
+                token: {
+                    value: makeId(20),
+                    valid: true
+                }
+            });
+            voters.push({
+                l_name: 'BOUSLAMA' + i,
+                f_name: 'HIND_' + i,
+                email: 'hind.bouslama@gmail.com',
+                birthday: '1998-11-23',
+                token: {
+                    value: makeId(20),
+                    valid: true
+                }
+            });
+            voters.push({
+                l_name: 'BAALOU_' + i,
+                f_name: 'REDA_' + i,
+                email: 'reda.baalou@gmail.com',
+                birthday: '1999-01-23',
+                token: {
+                    value: makeId(20),
+                    valid: true
+                }
+            });
+            voters.push({
+                l_name: 'BENJOUD' + i,
+                f_name: 'JAD_' + i,
+                email: 'benjad.jad@gmail.com',
+                birthday: '1992-11-10',
+                token: {
+                    value: makeId(20),
+                    valid: true
+                }
+            });
+        }
         await Voter.collection.drop();
         await Voter.insertMany(voters);
-    } catch (e) {
-        console.log(e);
+
+        console.log('------------------- Voters url -------------------');
+        const urls = [];
+        for (let v of voters) {
+            urls.push('http://localhost:5000/vote/' + vote._id + '/' + v.token.value);
+        }
+        await fs.writeFileSync('votesUrls.txt', urls.join('\n'));
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+const getVotersUrl = async (voters) => {
+    try {
+    } catch (error) {
+        console.log(error);
     }
 };
 

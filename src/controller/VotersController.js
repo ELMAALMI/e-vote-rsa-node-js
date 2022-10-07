@@ -2,7 +2,7 @@ const { Voter, Vote } = require('../model');
 const openpgpUtil = require('../utils/opengpUtil');
 exports.SaveVoterVote = async (req, res) => {
     try {
-        const voter = await Voter.findOne({ 'token.key': req.body.token });
+        const voter = await Voter.findOne({ 'token.value': req.body.token });
 
         if (!voter?.token.valid) {
             return res.redirect('/403');

@@ -4,12 +4,13 @@ exports.VotePage = async (req, res) => {
     try {
         const { token, voteId } = req.params;
         const vote = await Vote.findOne({ _id: voteId }).populate('condidates');
-        const voter = await Voter.findOne({ 'token.key': token });
+        const voter = await Voter.findOne({ 'token.value': token });
 
         if (!vote || !voter) {
             return res.redirect('/404');
         }
         if (!voter?.token.valid) {
+            console.log(voter);
             return res.redirect('/403');
         }
         return res.render('vote', { condidates: vote.condidates, voter, token, voteId });
@@ -39,7 +40,7 @@ exports.VoteHomePage = async (req, res) => {
             } else {
                 condidate = await Condidate.findOne({ _id: votes_win[0].id });
             }
-            v['win'] = condidate.l_name;
+            v['win'] = condidate?.l_name ?? '-';
             console.log(v['win']);
         });
     });
